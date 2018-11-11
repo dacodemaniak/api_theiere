@@ -1,78 +1,102 @@
 produit	libelllé	description	prix TTC	conditionnement	TVA	référence	photos	Non actif
-MUGS ET BOLS								
-set 4 mugs	Mugs En Rouge et Noir	Set de 4 mugs en porcelaine à motifs graphiques rouge et noir, contenance 17cl.	29.99€	vendus par 4	20.00%	4PMRN	"mug_en_rouge_et_noir_01.jpg
+mugs et bols								
+Mugs En Rouge et Noir	Mugs En Rouge et Noir	Set de 4 mugs en porcelaine à motifs graphiques rouge et noir, contenance 17cl.	29.99€	vendus par 4	20.00%	4PMRN	"mug_en_rouge_et_noir_01.jpg
 mug_en_rouge_et_noir_02.jpg"	
-mug 	Mug Chic	Mug en porcelaine de Chine à motifs cubes dorés à l'or fin. Présenté dans un coffret prêt à offrir. Contenance 35cl, lavage en lave vaisselle déconseillé. Ne pas utiliser dans un micro ondes.	23.50€	vendu a l'unité dans un coffret	20.00%	MP01	"mug_chic_01.jpg
+Mug Chic	Mug Chic	Mug en porcelaine de Chine à motifs cubes dorés à l'or fin. Présenté dans un coffret prêt à offrir. Contenance 35cl, lavage en lave vaisselle déconseillé. Ne pas utiliser dans un micro ondes.	23.50€	vendu a l'unité dans un coffret	20.00%	MP01	"mug_chic_01.jpg
 mug_chic_02.jpg"	
-mug 	Mug Ananas	Mug en porcelaine de Chine. Motifs ananas doré à l'or fin. Présenté dans un coffret prêt à offrir. Contenance 35cl. Lavage en lave vaisselle déconseillé. Ne pas utiliser dans un micro ondes.	23.50€	vendu a l'unité dans un coffret	20.00%	MP02	"mug_ananas_01.jpg
+Mug Ananas	Mug Ananas	Mug en porcelaine de Chine. Motifs ananas doré à l'or fin. Présenté dans un coffret prêt à offrir. Contenance 35cl. Lavage en lave vaisselle déconseillé. Ne pas utiliser dans un micro ondes.	23.50€	vendu a l'unité dans un coffret	20.00%	MP02	"mug_ananas_01.jpg
 mug_ananas_02.jpg"	
-bol	Bol Le Rêve Bleu	Bol pour préparation Matcha ou autre. Exterieur noir mat et interieur bleu brillant. Diamètre 13cm et hauteur 6cm.	12.99€	vendu à l'unité	20.00%	BM01	bol_reve_bleu.jpg	
-TISANIERES								
-tisanière	Tisanière La Romantique Blanche	Tisanière en porcelaine blanche, double paroi avec filtre inox et couvercle. Contenance 35cl.	26.10€	vendue à l'unité	20.00%	TP01	"tisaniere_la_romantique_blanche_01.jpg
+Instant noir	Instant noir	Petite tasse du Japon noir. 	4.99€	vendue à l'unité	20.00%	PTJ01		
+Instant blanc	Instant blanc	Petite tasse du Japon blanche.	4.99€	vendue à l'unité	20.00%	PTJ02		
+instant rouge	instant rouge	Petite tasses du Japon rouge. 	4.99€	vendue à l'unité	20.00%	PTJ03		
+Terre a terre 	Terre a terre 	Grande tasse du Japon blanche. 	19.99€	vendue à l'unité	20.00%	GTJ02		
+Terre a terre 	Terre a terre 	Grande tasse du Japon noir. 	19.99€	vendue à l'unité	20.00%	GTJ01		
+Bol Le Rêve Bleu	Bol Le Rêve Bleu	Bol pour préparation Matcha ou autre. Exterieur noir mat et interieur bleu brillant. Diamètre 13cm et hauteur 6cm.	12.99€	vendu à l'unité	20.00%	BM01	bol_reve_bleu.jpg	
+tisanière								
+Tisanière La Romantique Blanche	Tisanière La Romantique Blanche	Tisanière en porcelaine blanche, double paroi avec filtre inox et couvercle. Contenance 35cl.	26.10€	vendue à l'unité	20.00%	TP01	"tisaniere_la_romantique_blanche_01.jpg
 tisaniere_la_romantique_blanche_02.jpg
 tisaniere_la_romantique_blanche_03.jpg
 tisaniere_la_romantique_blanche_04.jpg"	0
-tisanière	Tisanière La Romantique Marron	Tisanière en porcelaine marron, double paroi avec filtre inox et couvercle. Contenance 35cl.	26.10€	vendue à l'unité	20.00%	TP02	"tisaniere_la_romantique_marron_01.jpg
+Tisanière La Romantique Marron	Tisanière La Romantique Marron	Tisanière en porcelaine marron, double paroi avec filtre inox et couvercle. Contenance 35cl.	26.10€	vendue à l'unité	20.00%	TP02	"tisaniere_la_romantique_marron_01.jpg
 tisaniere_la_romantique_marron_02.jpg
 tisaniere_la_romantique_marron_03.jpg
-tisaniere_la_romantique_marron_04.jpg"	
-THEIERES								
-théière avec filtre	Théière Mod	Théière en céramique de style contemporain gris anthracite mat avec un filtre inox. Contenance 0.8L.	29.99€	théière seule avec filtre	20.00%	TC01	"theiere_mod_01.jpg
-theiere_mod_02.jpg"	
-théière avec filtre	Théière Top	theiere en ceramique style contemporain couleur taupe mate avec filtre inox contenance 0.8l	29.99€	théière seule avec filtre	20.00%	TC02	theiere_top.jpg	
-théière japonaise	Théière Chance	Petite théière en terre cuite marron avec motifs trèfle, typique pour cérémonie japonaise. Filtre intégré à la théière.	49.99€	vendue à l'unité	20.00%	TJTC01	"theiere_chance_01.jpg
-theiere_chance_02.jpg"	
-théière en verre	Théière l'Eclatante	Théière en verre avec filtration par le bec verseur. Système de ressorts. Contenance 0.8L.	39.99€	vendue à l'unité	20.00%	IV02	"theiere_l_eclatante_01.jpg
+tisaniere_la_romantique_marron_04.jpg"	0
+théières								
+Bouilloire Tempête	Bouilloire Tempête							
+Théière Chance	Théière Chance	Petite théière en terre cuite marron avec motifs trèfle, typique pour cérémonie japonaise. Filtre intégré à la théière.	49.99€	vendue à l'unité	20.00%	TJTC01	"theiere_chance_01.jpg
+theiere_chance_02.jpg"	0
+Marron chaud	Marron chaud	Théière en terre cuite marron, avec anse en plastique. Facile d'entretient avec filtre inox intégré et amovible. Contenance 0.70 l.	39.99€	vendue à l'unité	20.00%	TJTC02		
+Théière l'Eclatante	Théière l'Eclatante	Théière en verre avec filtration par le bec verseur. Système de ressorts. Contenance 0.8L.	39.99€	vendue à l'unité	20.00%	IV02	"theiere_l_eclatante_01.jpg
 theiere_l_eclatante_02.jpg
 theiere_l_eclatante_03.jpg"	
-théière en verre	Théière Petite Limpide	Théière en verre avec filtration par le bec verseur. Système de ressorts. Contenance 0.4L.	19.99€	vendu à l'unité	20.00%	IV01	"theiere_petite_limpide_01.jpg
+Théière Petite Limpide	Théière Petite Limpide	Théière en verre avec filtration par le bec verseur. Système de ressorts. Contenance 0.4L.	19.99€	vendu à l'unité	20.00%	IV01	"theiere_petite_limpide_01.jpg
 theiere_petite_limpide_02.jpg"	
-SERVICE A THE								
-service à thé 4 bols	Service à thé Mimi	Service en porcelaine composé d'une théière de 70cl et de bols de 13cl dans un coffret prêt à offrir.	34.99€	théière et 4 bols vendus dans un coffret prêt à offrir	20.00%	ST401	"service_a_the_mimi_01.jpg
+Théière  Nature 	Théière  Nature 	Théière en fonte verte arrivant tout droit de Chine avec fitre inox intégré. Contenance 0.6L.	54.90€	vendu à l'unité	20.00%	TF02		
+Théière  Elégance	Théière  Elégance	Elégante petite théière verte en fonte de Chine. Filtre en inox intégré. Contenance 0.3L.	23.99€	vendue à l'unité	20.00%	TF04		
+Théière Mod	Théière Mod	Théière ronde en fonte ornée de motifs dorés. Notre théière provient de Chine et a une contenance de 0.6 Litre(s). Le filtre pour infuser le thé est intégré dans la théière	45.99€	vendue à l'unité	20.00%	TSF01		
+Théière Chic et Choc	Théière Chic et Choc	Grande théière en fonte de chine.  Filtre intégré non intégré. Conseillé de prendre filtre en papier blanc taille L Ref: FPTL100   Contenance 1.4L.	84.90€	Vendu à l'unité	20.00%	TSN01		
+Théière  Black and White	Théière  Black and White	Théière en fonte de Chine avec filtre en inox intégré. Contenance 0.8L.	45.99€	vendue à l'unité	20.00%	TF03		
+Théière Neige	Théière Neige	Théière en fonte de Chine avec filtre en inox intégré. Contenance 0.8L.	45.99€	vendue à l'unité	20.00%	TF01		
+Théière  Ambiguë	Théière  Ambiguë	Théière en fonte pourpre avec filtre en Inox intégré. Fonte de Chine. Contenance 0.6L.	39.90€	vendue à l'unité	20.00%	TF06		
+service à thé 								
+Coffret la bourgeoise	Coffret la bourgeoise	Coffret en fonte de Chine composé d'un théière et son plateau ainsi que 4 mini bols. Filtre en inox intégré. Contenance 1L	75.99€	théière, 4 mini bols et son plateau vendus dans un coffret	20.00%	CTF01		
+Service à thé Mimi	Service à thé Mimi	Service en porcelaine composé d'une théière de 70cl et de bols de 13cl dans un coffret prêt à offrir.	34.99€	théière et 4 bols vendus dans un coffret prêt à offrir	20.00%	ST401	"service_a_the_mimi_01.jpg
 service_a_the_mimi_02.jpg
-service_a_the_mimi_03.jpg"	
-INFUSEURS								
-pince à thé	Pince à thé Pince Moi	Pince à thé en acier inoxydable de 6.5cm. Idéale pour mug et théière.	3.99€	vendue à l'unité	20.00%	PT01	"pince_moi_01.jpg
+service_a_the_mimi_03.jpg"	0
+infuseurs								
+pince moi fort	pince moi fort	Pince à thé en acier inoxydable avec fermoir supplémentaire. Idéale pour mug et théière.	3.99€	vendu à l'unité	20.00%	PT03		
+poupince	poupince	Pince à thé en inox.	3.99€	vendu à l'unité	20.00%	PT02		
+ Pince Moi	 Pince Moi	Pince à thé en acier inoxydable de 6.5cm. Idéale pour mug et théière.	3.99€	vendue à l'unité	20.00%	PT01	"pince_moi_01.jpg
 pince_moi_02.jpg"	
-boule à thé	Boule à thé Roule dans le Thé	Boule à thé de 5cm en acier inoxydable. Idéale pour mug ou tasse.	2.99€	vendue à l'unité	20.00%	BT01	roule_dans_le_the.jpg	
-FILTRES								
-filtre flottant	Filtre Poupée Marocaine	Filtre fantaisie poupée marocaine avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFM01	"filtre_poupee_marocaine_01.jpg
+ Roulé dans le Thé	 Roulé dans le Thé	Boule à thé de 5cm en acier inoxydable. Idéale pour mug ou tasse.	2.99€	vendue à l'unité	20.00%	BT01	roule_dans_le_the.jpg	
+filtres								
+Filtre Poupée Marocaine	Filtre Poupée Marocaine	Filtre fantaisie poupée marocaine avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFM01	"filtre_poupee_marocaine_01.jpg
 filtre_poupee_marocaine_02.jpg
 filtre_poupee_marocaine_03.jpg"	
-filtre flottant	Filtre Poupée Geisha rouge	Filtre fantaisie poupée japonaise rouge avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFG01	"filtre_poupee_geisha_rouge_01.jpg
+Filtre Poupée Geisha rouge	Filtre Poupée Geisha rouge	Filtre fantaisie poupée japonaise rouge avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFG01	"filtre_poupee_geisha_rouge_01.jpg
 filtre_poupee_geisha_rouge_02.jpg
 filtre_poupee_geisha_rouge_03.jpg"	
-filtre flottant	Filtre Poupée Geisha blanche	Filtre fantaisie, poupée japonaise blanche avec receveur. Hauteur 12cm	22.90€	vendue à l'unité	20.00%	FFG02	"filtre_poupee_geisha_blanche_01.jpg
+Filtre Poupée Geisha blanche	Filtre Poupée Geisha blanche	Filtre fantaisie, poupée japonaise blanche avec receveur. Hauteur 12cm	22.90€	vendue à l'unité	20.00%	FFG02	"filtre_poupee_geisha_blanche_01.jpg
 filtre_poupee_geisha_blanche_02.jpg
 filtre_poupee_geisha_blanche_03.jpg"	
-filtre flottant	Filtre Poupée Indienne	Filtre fantaisie, poupée indienne avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFI01	"filtre_poupee_indienne_01.jpg
+Filtre Poupée Indienne	Filtre Poupée Indienne	Filtre fantaisie, poupée indienne avec receveur. Hauteur 12cm.	22.90€	vendue à l'unité	20.00%	FFI01	"filtre_poupee_indienne_01.jpg
 filtre_poupee_indienne_02.jpg
 filtre_poupee_indienne_03.jpg"	
-filtres papier	Filtres papiers taille S	Filtres papiers blancs, taille S, non chloré. Double plis en bas. Le filtre peut être placé directement dans la tasse. Longueur 15.5cm. 100 unités par boite.	3.50€	boite vendue à l'unité avec 100 filtres par boite	20.00%	FPTS100	"filtre_papier_t_S_01.jpg
+Filtres papiers taille S	Filtres papiers taille S	Filtres papiers blancs, taille S, non chloré. Double plis en bas. Le filtre peut être placé directement dans la tasse. Longueur 15.5cm. 100 unités par boite.	3.50€	boite vendue à l'unité avec 100 filtres par boite	20.00%	FPTS100	"filtre_papier_t_S_01.jpg
 filtre_papier_t_S_02.jpg"	
-filtres papier 	Filtres papiers taille L	Filtres papiers blancs, taille L, non chloré. Double plis en bas. Longueur 13cm. 100 unités par boite.	3.99€	boite vendue à l'unité avec 100 filtres par boite	20.00%	FPTL100	"filtre_papier_t_L_01.jpg
+Filtres papiers taille L	Filtres papiers taille L	Filtres papiers blancs, taille L, non chloré. Double plis en bas. Longueur 13cm. 100 unités par boite.	3.99€	boite vendue à l'unité avec 100 filtres par boite	20.00%	FPTL100	"filtre_papier_t_L_01.jpg
 filtre_papier_t_L_02.jpg"	
-filtre japonais avec cordon	Filtres japonais	Sachet filtres refermable avec un cordon. Sachet en matières premières naturelles certifiées. Dimension 8.2x9.6cm. Boite de 50 unités.	8.99€	boite vendue à l'unité avec 50 filtres par boite	20.00%	FPJ50	"filtre_japonais_01.jpg
+Filtres japonais	Filtres japonais	Sachet filtres refermable avec un cordon. Sachet en matières premières naturelles certifiées. Dimension 8.2x9.6cm. Boite de 50 unités.	8.99€	boite vendue à l'unité avec 50 filtres par boite	20.00%	FPJ50	"filtre_japonais_01.jpg
 filtre_japonais_02.jpg"	
-PORTE FILTRE								
-porte filtre	Porte filtre Click	Fermoir en métal. Porte filtre.	2.50€	vendu à l'unité	20.00%	CFM01	"porte_filtre_click_01.jpg
+porte filtre								
+Porte filtre Click	Porte filtre Click	Fermoir en métal. Porte filtre.	2.50€	vendu à l'unité	20.00%	CFM01	"porte_filtre_click_01.jpg
 porte_filtre_click_02.jpg
 porte_filtre_click_03.jpg"	
-BOITE A THE								
-boite à thé	Boite à thé Hako noir	Boite à thé japonaise noire, ronde, métallique, avec double fermeture. Contenance entre 50gr. et 100gr. en fonction des thés. Hauteur 8.4cm, diamètre 8.6cm.	7.99€	vendue à l'unité	20.00%	BTJ01	"boite_hako_noir_01.jpg
+boite à thé 								
+Boite à thé Hako noir	Boite à thé Hako noir	Boite à thé japonaise noire, ronde, métallique, avec double fermeture. Contenance entre 50gr. et 100gr. en fonction des thés. Hauteur 8.4cm, diamètre 8.6cm.	7.99€	vendue à l'unité	20.00%	BTJ01	"boite_hako_noir_01.jpg
 boite_hako_noir_02.jpg"	
-boite à thé	Boite à thé Hako bleu	Boite à thé japonaise bleue, ronde, métallique, avec double fermeture. Contenance entre 50gr. et 100gr. en fonction des thés. Hauteur 8.4cm, diamètre 8.6cm.	7.99€	vendue à l'unité	20.00%	BTJO2	"boite_hako_bleu_01.jpg
-boite_hako_bleu_02.jpg"	0
-boite à thé	Boite à thé Hako Washi bleu	Boite à thé japonaise métallique bleue, recouverte de papier washi japonais. Contenance 100gr., hauteur 7.3cm, diamètre 5.2cm.	14.99€	vendue à l'unité	20.00%	BTJ05	"boite_hako_washi_bleu_01.jpg
+Boite à thé Hako bleu	Boite à thé Hako bleu	Boite à thé japonaise bleue, ronde, métallique, avec double fermeture. Contenance entre 50gr. et 100gr. en fonction des thés. Hauteur 8.4cm, diamètre 8.6cm.	7.99€	vendue à l'unité	20.00%	BTJO2	"boite_hako_bleu_01.jpg
+boite_hako_bleu_02.jpg"	
+Boite à thé Hako Washi bleu	Boite à thé Hako Washi bleu	Boite à thé japonaise métallique bleue, recouverte de papier washi japonais. Contenance 100gr., hauteur 7.3cm, diamètre 5.2cm.	14.99€	vendue à l'unité	20.00%	BTJ05	"boite_hako_washi_bleu_01.jpg
 boite_hako_washi_bleu_02.jpg"	
-boite à thé	Boite à thé Hako Washi violette	Boite à thé japonaise métallique violette, recouverte de papier washi japonais. Contenance 100gr., hauteur 7.3cm, diamètre 5.2cm.	14.99€	vendue à l'unité	20.00%	BTJ06	"boite_hako_washi_violet_01.jpg
+Boite à thé Hako Washi violette	Boite à thé Hako Washi violette	Boite à thé japonaise métallique violette, recouverte de papier washi japonais. Contenance 100gr., hauteur 7.3cm, diamètre 5.2cm.	14.99€	vendue à l'unité	20.00%	BTJ06	"boite_hako_washi_violet_01.jpg
 boite_hako_washi_violet_02.jpg"	0
-boite à thé	Boite à thé Nature rouge	Boite à thé japonaise rouge, métallique, avec double fermeture. Contenance 50gr., hauteur 10.3cm, diamètre 6.6cm.	7.99€	vendue à l'unité	20.00%	BTJ04	"boite_nature_rouge_01.jpg
+Boite à thé Nature rouge	Boite à thé Nature rouge	Boite à thé japonaise rouge, métallique, avec double fermeture. Contenance 50gr., hauteur 10.3cm, diamètre 6.6cm.	7.99€	vendue à l'unité	20.00%	BTJ04	"boite_nature_rouge_01.jpg
 boite_nature_rouge_02.jpg"	
-boite à thé	Boite à thé Nature verte	Boite à thé japonaise métallique, verte, avec double fermeture. Contenance 50gr., hauteur 10.3cm, diamètre 6.6cm.	7.99€	vendue à l'unité	20.00%	BTJ03	"boite_nature_verte_01.jpg
+Boite à thé Nature verte	Boite à thé Nature verte	Boite à thé japonaise métallique, verte, avec double fermeture. Contenance 50gr., hauteur 10.3cm, diamètre 6.6cm.	7.99€	vendue à l'unité	20.00%	BTJ03	"boite_nature_verte_01.jpg
 boite_nature_verte_02.jpg"	
-ACCESSOIRES EN BAMBOU								
-cuillère en bambou	Cuillère à Matcha	Mesure à thé en bambou pour thé matcha.	3.50€	vendue à l'unité	20.00%	CB01	"cuiellere_matcha_01.jpg
+accessoires en bambou								
+Cuillère à Matcha	Cuillère à Matcha	Mesure à thé en bambou pour thé matcha.	3.50€	vendue à l'unité	20.00%	CB01	"cuiellere_matcha_01.jpg
 cuiellere_matcha_02.jpg"	
-balai en bambou	Fouet à Matcha	Véritable fouet à thé vert Matcha avec 80 poils, pour ceremonie du thé japonaise ; le Chanoyu.	15.99€	vendu à l'unité	20.00%	BB01	"fouet_a_matcha_01.jpg
+Fouet à Matcha	Fouet à Matcha	Véritable fouet à thé vert Matcha avec 80 poils, pour ceremonie du thé japonaise ; le Chanoyu.	15.99€	vendu à l'unité	20.00%	BB01	"fouet_a_matcha_01.jpg
 fouet_a_matcha_02.jpg"	
+accessoires à café								
+Coffee Press	Coffee Press	La cafetière piston Coffee Press de chez Bialetti vous offrira une dégustation unique. Un look simple et moderne qui s'adapte à votre quotidien. Une contenance de 350ml.	20.90€	vendue à l'unité	20.00%	CP350		
+Coffee Press	Coffee Press	La cafetière piston Coffee Press de chez Bialetti vous offrira une dégustation unique. Un look simple et moderne qui s'adapte à votre quotidien. Une contenance de 1L.	28.99€	vendue à l'unité	20.00%	CP81		
+Et l'italie est là!	Et l'italie est là!	"La cafetière Italienne ""Et l'Italie est là"" de chez Bialetti vous fera voyager. Un look qui vous raménera à votre enfance et une manière unique de préparer votre café . Rapide à préparer avec un goût exeptionnel. Contenance 3 tasses."	28.50€	vendue à l'unité	20.00%	CIM31		
+Et l'italie est là!	Et l'italie est là!	"La cafetière Italienne ""Et l'Italie est là"" de chez Bialetti vous fera voyager. Un look qui vous raménera à votre enfance et une manière unique de préparer votre café . Rapide à préparer avec un goût exeptionnel. Contenance 6 tasses."	40.99€	vendue à l'unité	20.00%	CIM61		
+Coffee Chic 	Coffee Chic 	La cafetière Italienne Coffee chic de chez Bialetti s'adapte à tous types de plaque de cuisson, même à l'induction. Parfaite de par le goût de son café mais également de par son look moderne et chic, elle vous séduira sans problème. Contenance 6 tasses.	40.50€	vendue à l'unité	20.00%	VE61		
+Coffee Chic 	Coffee Chic 	La cafetière Italienne Coffee chic de chez Bialetti s'adapte à tous types de plaque de cuisson, même à l'induction. Parfaite de par le goût de son café mais également de par son look moderne et chic, elle vous séduira sans problème. Contenance 10 tasses.	48.90€	vendue à l'unité	20.00%	VE101		
+Coffrets								
+Coffret découverte surprise	Coffret découverte surprise	Ce coffret vous fera découvrir des thés uniques et magiques. Il vous transportera dans différents pays, dans des jardins de thé et de fleurs. La promesse du voyage pour vos papilles. Ce coffret contient quatre thés différents ainsi que deux accessoires et une surprise. Laissez vous surprendre par ces doux breuvages.	29.99€	vendu dans sa boîte	20.00%	CDSLST1		
+Coffret matcha 	Coffret matcha 	"Le coffret matcha contient tous les éléments nécessaires pour une dégustation traditionnelle Japonaise : un bol, un fouet, une spatule ainsi qu'un sachet de 30g de matcha. La spatule en bois permet de prélever la quantité exacte de Matcha. Le fouet traditionnel ""Chasen"" sert à battre la poudre de thé dans l'eau afin d'obtenir une mousse onctueuse."	59.99€	vendu dans sa boîte	20.00%	CMLST1		

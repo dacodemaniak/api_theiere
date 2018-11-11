@@ -43,19 +43,19 @@ abstract class ImportHandler extends ContainerAwareCommand implements HandlerInt
 		];
 	/**
 	 * Instance du gestionnaire suivant
-	 * @var \ContentBundle\Controller\ImportHandler
+	 * @var ImportHandler
 	 */
 	private $nextHandler;
 	
 	/**
 	 * Instance du manager Doctrine
-	 * @var Doctrine\ORM\EntityManager
+	 * @var \Doctrine\ORM\EntityManager
 	 */
 	protected $manager;
 	
 	/**
 	 * Pool de catégories
-	 * @var ContentBundle\Controller\Import\CategoryPooler
+	 * @var \ContentBundle\Import\CategoryPooler
 	 */
 	protected $pooler;
 	
@@ -88,11 +88,22 @@ abstract class ImportHandler extends ContainerAwareCommand implements HandlerInt
 	}
 	
 	/**
+	 * @obsolete getImageDecorator
+	 * @see getDecorator(string $slug): Decor
 	 * Retourne le décorateur "images" pour la génération d'un produit
-	 * @return ContentBundle\Entity\Decor
+	 * @return \ContentBundle\Entity\Decor
 	 */
 	protected function getImageDecorator(): Decor {
 		return $this->pooler->getImageDecorator();	
+	}
+	
+	/**
+	 * Retourne une instance de décorateur en fonction du slug
+	 * @param string $slug Slug du décorateur à retourner
+	 * @return Decor
+	 */
+	protected function getDecorator(string $slug): Decor {
+	    return $this->pooler->getDecorator($slug);
 	}
 	
 	/**
@@ -172,7 +183,7 @@ abstract class ImportHandler extends ContainerAwareCommand implements HandlerInt
 	/**
 	 * Retourne un produit à partir de son slug
 	 * @param array $data
-	 * @return NULL|ContentBundle\Entity\Article
+	 * @return NULL|\ContentBundle\Entity\Article
 	 */
 	protected function getProduct(array $data) {
 		$slug = strtolower(self::toSlug($data[0]));

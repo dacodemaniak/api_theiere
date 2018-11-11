@@ -11,32 +11,51 @@ use ContentBundle\Import\ImportHandler;
 use ContentBundle\Entity\Article;
 use ContentBundle\Entity\CategorieToArticles;
 use ContentBundle\Entity\DecorArticle;
+use ContentBundle\Import\Strategy\ImportInterface;
 
 class ProductHandler extends ImportHandler {
-	const _SEP = "\n";
+	
+	/**
+	 * Stratégie d'importation du produit
+	 * @var ImportHandler
+	 */
+	private $strategy;
+	
+	public function setStrategy(ImportInterface $strategy) {
+	   $this->strategy = $strategy;    
+	}
 	
 	/**
 	 * Gestionnaire pour le traitement d'une ligne de catégorie
 	 * @param array $data
 	 */
 	public function handle(array $data) {
-		echo "Traite un produit ? " . $data[0] . "<br>\n";
-		if ($this->emptyCols($data) <= 3) {
-			echo "Produit traité : " . $data[0] . "<br>\n";
+	    echo "Traite un produit ? " . $data[$this->strategy->titleColumn] . "<br>\n";
+		if ($this->emptyCols($data) <= $this->strategy::_PRODUCT_EMPTY_COLS) {
+		    echo "Produit traité : " . $data[$this->strategy->titleColumn] . "<br>\n";
 			// Vérifie l'existence de la catégorie
 			if (($product = $this->getProduct($data)) === null) {
 				$product = new Article();
-				$product->setSlug(strtolower(self::toSlug($data[0])));
-				$product->setIsEnabled(1);
+				$product->setSlug(strtolower(self::toSlug($data[$this->strategy->titleColumn])));
+				
+				// Détermination du statut du produit (actif ou non)
+				if ((count($data) - 1) <= $this->strategy->statusColumn) {
+				    $status = $data[$this->strategy->statusColumn] !== "" ? 0 : 1;
+				} else {
+				    $status = 1;
+				}
+				
+				$product->setIsEnabled($status);
 			}
 			
 			$content = [
-				"title" => ["fr" => $data[0]],
-				"origin" => ["fr" => $data[1]],
-				"abstract" => ["fr" => $data[2]],
-				"description" => ["fr" => $data[3]],
-				"pricing" => $this->_parse($data[4], $this->_vat($data[6]), $data[5]),
-				"vat" => $this->_vat($data[6])
+				"title" => ["fr" => $data[$this->strategy->titleColumn]],
+			    "origin" => $this->strategy->originColumn !== null ? ["fr" => $data[$this->strategy->originColumn]] : null,
+			    "abstract" => $this->strategy->abstractColum !== null ? ["fr" => $data[$this->strategy->abstractColumn]] : null,
+			    "description" => $this->strategy->descriptionColumn !== null ? ["fr" => $data[$this->strategy->descriptionColumn]] : null,
+			    "conditionnement" => $this->strategy->conditionnementColumn !== null ? ["fr" => $data[$this->strategy->conditionnementColumn]] : null,
+			    "pricing" => $this->_parse($data[$this->strategy->priceColumn], $this->_vat($data[$this->strategy->vatColumn]), $data[$this->strategy->grammageColumn]),
+			    "vat" => $this->_vat($data[$this->strategy->vatColumn])
 			];
 			
 			$product->setContent(json_encode($content));
@@ -44,8 +63,60 @@ class ProductHandler extends ImportHandler {
 			// Persiste la donnée
 			$this->manager->persist($product);
 			
-			// Gère le décorateur "images"
-			$images  = $this->_parseImages($data[7]);
+			// Gère les décorateurs
+			if( ($decorators = $this->strategy->getDecorators()) !== false) {
+    			foreach($decorators as $decorator) {
+    			    echo "Traite le décorateur : " . $decorator["decorator"] . "<br>\n";
+    			    if ($decorator["method"] !== null) {
+    			        $importedDatas = $this->{$decorator["method"]}($data[$decorator["col"]]);
+    			    } else {
+    			        $importedDatas = $data[$decorator["col"]];
+    			    }
+    			    
+    			    echo "Données de décor :<br>\n"; 
+    			    var_dump($importedDatas);
+    			    echo "<br>\n";
+
+    			    if (is_array($importedDatas) && count($importedDatas)) {
+    			        for ($i=0; $i < count($importedDatas); $i++) {
+    			            $decor = new DecorArticle();
+    			            $decor->setArticle($product);
+    			            $decor->setDecor($this->getDecorator($decorator["decorator"]));
+    			            
+    			            
+    			            // Traitement spécifique pour le décorateur "image"
+    			            if ($decorator["decorator"] === "images-produits") {
+    			                $decorContent [] = [
+    			                        "src" => $importedDatas[$i],
+    			                        "alt" => $product->getTitle()
+    			                ];
+    			            } else {
+    			                $decorContent[] = ["fr" => $importedDatas[$i]];
+    			            }
+    			        }
+    			        $decor->setContent(json_encode($decorContent));
+    			        $this->manager->persist($decor);
+    			        $this->manager->flush();
+    			        
+    			        $decorContent = [];
+
+    			    } else {
+    			        // Donnée à plat
+    			        $decor = new DecorArticle();
+    			        $decor->setArticle($product);
+    			        $decor->setDecor($this->getDecorator($decorator["decorator"]));
+    			        
+    			        $content = [
+    			            ["fr" => $importedDatas]
+    			        ];
+    			        $decor->setContent(json_encode($content));
+    			        $this->manager->persist($decor);
+    			        $this->manager->flush();
+    			    }
+    			}
+			}
+			/* Gère le décorateur "images"
+			$images  = $this->_parseImages($data[$this->strategy->imageColumn]);
 			if (count($images) > 0) {
 				for ($i = 0; $i < count($images); $i++) {
 					
@@ -64,6 +135,7 @@ class ProductHandler extends ImportHandler {
 					$this->manager->persist($image);
 				}
 			}
+			*/
 			
 			// Ajoute le produit à la catégorie courante
 			$categoryLevel = 2;
@@ -101,8 +173,8 @@ class ProductHandler extends ImportHandler {
 	private function _parse(string $price, float $vat, string $conditionnement) {
 		$pricing = [];
 		
-		$prices = explode(self::_SEP, $price);
-		$packages = explode(self::_SEP, $conditionnement);
+		$prices = explode($this->strategy::_SEP, $price);
+		$packages = explode($this->strategy::_SEP, $conditionnement);
 		
 		for ($i=0; $i < count($prices); $i++) {
 			$perQuantities = explode("€", trim($prices[$i]));
@@ -149,7 +221,7 @@ class ProductHandler extends ImportHandler {
 		$images = [];
 		
 		if (strlen(trim($image)) > 0) {
-			$images = explode("|", $image);
+		    $images = explode($this->strategy::_SEP, $image);
 			for ($i=0; $i < count($images); $i++) {
 				$images[$i] = self::toSlug($images[$i]);
 			}

@@ -11,24 +11,37 @@ use ContentBundle\Import\CategoryPooler;
 use ContentBundle\Import\CategoryHandler;
 use ContentBundle\Import\SubCategoryHandler;
 use ContentBundle\Import\ProductHandler;
+use ContentBundle\Import\Strategy\ImportInterface;
+use ContentBundle\Import\Strategy\TeaStrategy;
 
 class ImportController extends Controller {
 	
 	/**
 	 * Pooler de catégories
-	 * @var ContentBundle\Import\CategoryPooler
+	 * @var \ContentBundle\Import\CategoryPooler
 	 */
 	private $categoryPooler;
 	
 	/**
-	 * @Route("/products/import/", name="articles_import")
+	 * Instance de stratégie pour l'importation des données
+	 * @var \ContentBundle\Import\Strategy\ImportInterface
+	 */
+	private $strategyInstance;
+	
+	/**
+	 * @Route("/products/import/{strategy}", name="articles_import")
 	 * @Method({"GET"})
 	 */
 	public function importArticleAction(Request $request)
 	{
+	    // Définit la stratégie à utiliser pour l'importation des données
+	    $strategyClass = ucfirst($request->get("strategy")) . "Strategy";
+	    $strategy = "\\ContentBundle\\Import\\Strategy\\" . $strategyClass;
+	    $this->strategyInstance = new $strategy();
+	    
 		// Définit la catégorie racine de l'importation
 		$categoryRepository = $this->getDoctrine()->getRepository("MenuBundle:Categorie");
-		$this->categoryPooler = new CategoryPooler($categoryRepository->find(5), $this->getDoctrine()->getManager());
+		$this->categoryPooler = new CategoryPooler($categoryRepository->find($this->strategyInstance::_MAIN_CATEGORY_ID), $this->getDoctrine()->getManager());
 		
 		$handle = $this->_open();
 		
@@ -51,8 +64,11 @@ class ImportController extends Controller {
 					
 					// Entre dans la chaîne de responsabilités
 					$categoryHandler = new CategoryHandler($this->categoryPooler);
+					$categoryHandler->setStrategy($this->strategyInstance);
 					$subCategoryHandler = new SubCategoryHandler($this->categoryPooler);
+					$subCategoryHandler->setStrategy($this->strategyInstance);
 					$productHandler = new ProductHandler($this->categoryPooler);
+					$productHandler->setStrategy($this->strategyInstance);
 					$categoryHandler->setNext($subCategoryHandler)->setNext($productHandler);
 					$categoryHandler->handle($datas);
 					
@@ -72,7 +88,7 @@ class ImportController extends Controller {
 	 * @return resource | boolean
 	 */
 	private function _open() {
-		$path = __DIR__ . "/../Resources/_csv/sale.csv";
+		$path = __DIR__ . "/../Resources/_csv/" . $this->strategyInstance::_FILE_NAME;
 		
 		return fopen($path, "r");
 	}

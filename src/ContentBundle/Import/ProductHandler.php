@@ -51,7 +51,7 @@ class ProductHandler extends ImportHandler {
 			$content = [
 				"title" => ["fr" => $data[$this->strategy->titleColumn]],
 			    "origin" => $this->strategy->originColumn !== null ? ["fr" => $data[$this->strategy->originColumn]] : null,
-			    "abstract" => $this->strategy->abstractColum !== null ? ["fr" => $data[$this->strategy->abstractColumn]] : null,
+			    "abstract" => $this->strategy->abstractColumn !== null ? ["fr" => $data[$this->strategy->abstractColumn]] : null,
 			    "description" => $this->strategy->descriptionColumn !== null ? ["fr" => $data[$this->strategy->descriptionColumn]] : null,
 			    "conditionnement" => $this->strategy->conditionnementColumn !== null ? ["fr" => $data[$this->strategy->conditionnementColumn]] : null,
 			    "pricing" => $this->_parse($data[$this->strategy->priceColumn], $this->_vat($data[$this->strategy->vatColumn]), $data[$this->strategy->grammageColumn]),

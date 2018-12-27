@@ -207,6 +207,30 @@ class Article
     }
     
     /**
+     * Retourne l'image principale du produit
+     * @return array
+     */
+    public function getMainImage() {
+        $images = [];
+        $imagePath = "";
+        
+        foreach ($this->decors as $toDecors) {
+            if ($toDecors->getDecor()->getSlug() === "images-produits") {
+                $content = $toDecors->getDecor()->getContent();
+                $imagePath = $content->root;
+                $values = $toDecors->getContent();
+                $images[] = $values;
+            }
+        }
+        $image = array_shift($images)[0];
+        
+        return [
+            "src" => $imagePath . $image->src,
+            "alt" => $image->alt->fr
+        ];
+    }
+    
+    /**
      * Ajoute un élément de décoration à l'article courant
      * @param Decor $decor
      */

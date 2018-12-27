@@ -2,6 +2,7 @@
 * @name variables.less
 **/
 @import "style.css";
+@import url("https://fonts.googleapis.com/css?family=Great+Vibes");
 #main-header {
   height: 10em;
 }
@@ -48,6 +49,26 @@
   color: #ffffff;
   font-weight: bold;
 }
+article#editorialwith-padding {
+  padding: 10em;
+  text-align: justify;
+  color: #ffffff;
+}
+article#editorial header h1 {
+  font-family: "Great Vibes";
+  font-size: 2em;
+}
+article#editorial header h2 {
+  color: #000000;
+}
+figure.card figcaption {
+  width: 100%;
+  height: 3em;
+  text-align: center;
+}
+/**
+* Importation des polices
+**/
 /**
 * Styles globaux
 **/

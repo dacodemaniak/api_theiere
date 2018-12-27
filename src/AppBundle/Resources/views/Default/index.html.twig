@@ -2,6 +2,43 @@
 
 {%  block title %}Thés Naturels{%  endblock %}
 
+{% block slider %}
+	Hello Slider
+{% endblock %}
+
 {%  block body %}
-	Default Home
+	{% block edito %}
+		<div class="row">
+			<article class="col with-padding" id="editorial">
+				<header>
+					<figure>
+					
+					</figure>
+					
+					<h1>{{ editorial.title }}</h1>
+					<h2>{{ editorial.subtitle }}</h2>
+				</header>
+				
+				<blockquote>
+					{{ editorial.content|raw }}
+				</blockquote>
+			</article>
+		</div>
+	{% endblock %}
+	
+	{% block promotions %}
+		{% if promotions %}
+			<div class="row">
+    			{%  for promotion in promotions %}
+    				<figure class="card col-xl-2 col-lg-2 col-md-2 col-sm-12 col-12">
+    					<img src="{{ promotion.image.src }}" alt="{{ promotion.image.alt }}" height="200" class="img-responsive">
+    					<figcaption>
+    						{{ promotion.product.getTitleFr() }}
+    					</figcaption>
+    				</figure>
+    			{% endfor %}
+    		</div>
+		{% endif %}
+	{% endblock %}
 {%  endblock %}
+

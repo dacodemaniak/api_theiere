@@ -1,3 +1,4 @@
+import { ProductService } from './../../services/product.service';
 import { BasketService } from './../../services/basket.service';
 import { BasketModel } from './models/basket.model';
 import { StringToNumberHelper } from '../../helpers/string-to-number.helper';
@@ -12,7 +13,6 @@ export class BasketListModule {
     private basket: Array<BasketModel>;
 
     public constructor() {
-        console.log('BasketListModule works !');
         this._init().then((panier) => {
             this.basket = panier;
 
@@ -44,7 +44,7 @@ export class BasketListModule {
 
     /**
      * Récupère les produits du panier
-     */
+     
     private _init(): Promise<Array<BasketModel>> {
         return new Promise((resolve) => {
             const basketService: BasketService = new BasketService();
@@ -53,5 +53,24 @@ export class BasketListModule {
             });
         });
         
+    }
+    */
+
+    private _init() {
+        const basketService: BasketService = new BasketService();
+        const productService: ProductService = new ProductService();
+    
+        const promise: Promise<Array<BasketModel>> = new Promise((resolve) => {
+            
+            basketService.localBasket().then((panier) => {
+                panier.forEach((basket: BasketModel) => {
+                    productService.getProduct(basket.id).then((product) => {
+                        basket.product = product;
+                        this.basket.push(basket);
+                    })
+                });
+                resolve();
+            });
+        });
     }
 }

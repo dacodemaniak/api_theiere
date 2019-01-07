@@ -31,10 +31,11 @@ export class BasketService {
                 console.log('Panier: ' + JSON.stringify(basket));
                 for (let element of basket) {
                     const product = new BasketModel();
-                    panier.push(product.deserialize(element));
-                };
+                    product.deserialize(element);
+                }
+                console.log('Résolution du panier');
+                resolve(panier);
             }
-            resolve(panier);
         });
     }
 

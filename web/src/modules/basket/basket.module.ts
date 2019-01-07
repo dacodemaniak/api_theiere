@@ -51,6 +51,7 @@ export class BasketModule {
             }
         });
 
+        /**
         if (this.userService.hasUser()) {
             console.log('Un utilisateur dans localStorage');
         } else {
@@ -65,5 +66,6 @@ export class BasketModule {
                 menu.render();
             })
         }
+        **/
     }
 }

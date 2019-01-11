@@ -396,6 +396,16 @@ section.category-products header.child h2 {
   color: #ed912f;
   letter-spacing: .1em;
 }
+section.category-products header.child h2.see-all {
+  width: 30%;
+  margin-left: 70%;
+  border-color: #ed912f;
+  border-bottom: solid 1px;
+  border-left: solid 1px;
+}
+section.category-products header.child h2.see-all a {
+  color: inherit;
+}
 section.category-products article.card header.card-header {
   background-color: #ed912f;
   height: 5em;

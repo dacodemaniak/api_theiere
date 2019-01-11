@@ -83,12 +83,13 @@ export class ContactModule {
             message: this.messageField.val()
         };
 
-        console.log('Envoie le formulaire');
+        console.log('Envoie le formulaire : ' + JSON.stringify(datas));
 
         $.ajax({
             url: this.apiRoot + 'contact',
             method: 'put',
             dataType: 'json',
+            data: datas,
             success: (datas) => {
                 console.log(datas.status);
                 if (datas.status === 200) {

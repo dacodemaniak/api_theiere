@@ -319,7 +319,7 @@ class Article
             }
         }
         
-        $image = array_shift($images)[0];
+        $image = array_pop($images)[count($images)];
         
 
         if ($image) {

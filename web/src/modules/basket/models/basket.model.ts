@@ -43,7 +43,11 @@ export class BasketModel {
     public servingSize?: string;
 
     /**
+<<<<<<< HEAD
      * Produit complet retourné
+=======
+     * Instance du produit issu du service distant
+>>>>>>> master
      */
     public product: any;
 

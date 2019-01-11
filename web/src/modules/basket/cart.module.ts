@@ -1,3 +1,4 @@
+import { ProductService } from './../../services/product.service';
 import { ToastModule } from './../toast/toast.module';
 import { BasketModel } from './models/basket.model';
 import { BasketService } from './../../services/basket.service';
@@ -150,18 +151,23 @@ import { StringToNumberHelper } from './../../helpers/string-to-number.helper';
         basketModel.quantity = quantity;
         basketModel.servingSize = servingSize;
 
-        const basketService: BasketService = new BasketService();
-        basketService.addProduct(basketModel).then((panier) => {
-            const userBasketQuantity: JQuery = $('#user-basket').find('span').eq(0);
-            userBasketQuantity.html(panier.length.toString());
+        const productService: ProductService = new ProductService();
 
-            // Plus le toast pour indiquer que ça s'est bien passé
-            const toast: ToastModule = new ToastModule({
-                title: 'Produit ajouté',
-                message: 'Le produit a bien été ajouté au panier.',
-                position: 'middle-center'
+        productService.getProduct(basketModel.id).then((product) => {
+            basketModel.product = product.product;
+            const basketService: BasketService = new BasketService();
+            basketService.addProduct(basketModel).then((panier) => {
+                const userBasketQuantity: JQuery = $('#user-basket').find('span').eq(0);
+                userBasketQuantity.html(panier.length.toString());
+    
+                // Plus le toast pour indiquer que ça s'est bien passé
+                const toast: ToastModule = new ToastModule({
+                    title: 'Produit ajouté',
+                    message: 'Le produit a bien été ajouté au panier.',
+                    position: 'middle-center'
+                });
+                toast.show();
             });
-            toast.show();
         });
     }
 }

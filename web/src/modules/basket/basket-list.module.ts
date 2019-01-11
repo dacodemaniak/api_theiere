@@ -26,9 +26,11 @@ export class BasketListModule {
                     let total: number = product.priceHT * product.quantity;
                     granTotal += total;
 
+                    fullTaxTotal += this._getTTC(product, product.product);
+
                     product.getTableRow().then((row) => {
                         tbody.append(row);
-                        fullTaxTotal += product.priceTTC;
+                        
                     });
                 }
                 
@@ -52,7 +54,25 @@ export class BasketListModule {
                 resolve(panier);
             });
         });
+    }
+
+    private _getTTC(inBasket: BasketModel, product: any): number {
+        const priceList: Array<any> = product.pricing;
         
+        let price: any;
+
+        if (priceList.length > 1) {
+            const index: number = priceList.findIndex((obj) => { return obj.quantity == inBasket.servingSize});
+            price = priceList[index];
+        } else {
+            price = priceList[0];
+        }
+
+        let vat: number = product.vat;
+        if (vat === 0.05) {
+            vat = 0.055;
+        }
+        return inBasket.priceHT * (1 + vat);
     }
     */
 

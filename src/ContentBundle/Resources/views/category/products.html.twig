@@ -67,48 +67,52 @@
             </div>
         {% else %}
         	<!-- Boucle sur une sélection de produits des sous-catégories -->
-        	{% for childrenProduct in childrenProducts %}
-        		<section class="category-products">
-        			<header class="header child">
-        				<h2 class="mr-auto">{{ childrenProduct.category.getTitleFr()|upper }}</h2>
-        			</header>
-        			
-        			<!-- Boucle sur les n premiers produits de la sous-categorie courante -->
-        			<div class="row">
-                    	{% for product in childrenProduct.products|slice(0, 3) if product.getIsEnabled() %}
-                    		<div class=" col-xl-3 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        		<article class="card" id="{{ product.getSlug() }}" data-id="{{ product.getId() }}">
-                        			<header class="card-header">
-                        				<h3 class="card-title">{{ product.getTitleFr() }}</h3>
-                        			</header>
-                        			
-                        			<div class="min-price ml-auto">
-                         				{% if product.getSmallestPrice()["multi"] %}
-                        					<p class="badge badge-secondary">A partir de {{ product.getSmallestPrice()["ttc"]|number_format(2, ',') }} &euro;</p>
-                        				{% else %}
-                        					<p class="badge badge-secondary">{{ product.getSmallestPrice()["ttc"]|number_format(2, ',') }} &euro;</p>
-                        				{% endif %}                       			
-                        			</div>
-                        			
-                        			<figure>
-                        				<img class="card-img-top" src="{{ product.getMainImage()["src"] }}" alt="{{ product.getMainImage()["alt"] }}">
-                        			</figure>
-                        			
-                        			<div class="card-body">
-                        				<p class="card-text">
-                                            {{ product.getDescriptionFr()|length > 218 ?  product.getDescriptionFr()|slice(0, 218) : product.getDescriptionFr()}}
-                        				</p>
-                						<a href="{{ path("product", {'slug': product.getId(), 'category': currentCategory.getId()}) }}" class="btn btn-outline-primary" role="button" title="Voir {{ product.getTitleFr() }}">
-                							Plus d'information
-                						</a>
-                                        {{ include("@Content/product/form.html.twig", {"product": product}) }}
-                        			</div>
-                        		</article>
-                        	</div>
-                    	{% endfor %}        			
-        			</div>
-        		</section>
-        	{% endfor %}
+            	{% for childrenProduct in childrenProducts if childrenProduct.products|length %}
+            		<section class="category-products">
+            			<header class="header child">
+            				<h2 class="mr-auto see-all">
+            				    <a href="{{ path("products_category", {'slug': childrenProduct.category.getId()}) }}" title="Tous les produits de la catégorie {{ childrenProduct.category.getTitleFr() }}">
+            	                    Voir tous les produits dans<br>{{ childrenProduct.category.getTitleFr()|upper }}
+            	                </a>
+            				</h2>
+            			</header>
+            			
+            			<!-- Boucle sur les n premiers produits de la sous-categorie courante -->
+            			<div class="row">
+                        	{% for product in childrenProduct.products|slice(0, 3) if product.getIsEnabled() %}
+                        		<div class=" col-xl-3 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                            		<article class="card" id="{{ product.getSlug() }}" data-id="{{ product.getId() }}">
+                            			<header class="card-header">
+                            				<h3 class="card-title">{{ product.getTitleFr() }}</h3>
+                            			</header>
+                            			
+                            			<div class="min-price ml-auto">
+                             				{% if product.getSmallestPrice()["multi"] %}
+                            					<p class="badge badge-secondary">A partir de {{ product.getSmallestPrice()["ttc"]|number_format(2, ',') }} &euro;</p>
+                            				{% else %}
+                            					<p class="badge badge-secondary">{{ product.getSmallestPrice()["ttc"]|number_format(2, ',') }} &euro;</p>
+                            				{% endif %}                       			
+                            			</div>
+                            			
+                            			<figure>
+                            				<img class="card-img-top" src="{{ product.getMainImage()["src"] }}" alt="{{ product.getMainImage()["alt"] }}">
+                            			</figure>
+                            			
+                            			<div class="card-body">
+                            				<p class="card-text">
+                                                {{ product.getDescriptionFr()|length > 218 ?  product.getDescriptionFr()|slice(0, 218) : product.getDescriptionFr()}}
+                            				</p>
+                    						<a href="{{ path("product", {'slug': product.getId(), 'category': currentCategory.getId()}) }}" class="btn btn-outline-primary" role="button" title="Voir {{ product.getTitleFr() }}">
+                    							Plus d'information
+                    						</a>
+                                            {{ include("@Content/product/form.html.twig", {"product": product}) }}
+                            			</div>
+                            		</article>
+                            	</div>
+                        	{% endfor %}        			
+            			</div>
+            		</section>
+            	{% endfor %}
         {% endif %}
     </section>
 {% endblock %}

@@ -286,14 +286,14 @@ class Categorie
     public function getRawArticles(): array {
         $articles = [];
         foreach($this->articles as $catToArticle) {
-            
-            $articles[] = [
-                "id" => $catToArticle->getArticle()->getId(),
-                "slug" => $catToArticle->getArticle()->getSlug(),
-                "content" => $catToArticle->getArticle()->getRawContent(),
-                "decorators" => $catToArticle->getArticle()->getDecorators()
-            ];
-            
+            if ($catToArticle->getArticle()->getIsEnabled()) {
+                $articles[] = [
+                    "id" => $catToArticle->getArticle()->getId(),
+                    "slug" => $catToArticle->getArticle()->getSlug(),
+                    "content" => $catToArticle->getArticle()->getRawContent(),
+                    "decorators" => $catToArticle->getArticle()->getDecorators()
+                ];
+            }
         }
         
         return $articles;

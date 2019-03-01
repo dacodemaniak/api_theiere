@@ -282,7 +282,9 @@ class CategoryController extends FOSRestController {
 	   $catToArticles = $category->getArticles();
 	    
 	    foreach ($catToArticles as $catToArticle) {
-	        $products[] = $catToArticle->getArticle();
+	        if ($catToArticle->getArticle()->getIsEnabled()) {
+	            $products[] = $catToArticle->getArticle();
+	        }
 	    }
 	    
 	    return $products;

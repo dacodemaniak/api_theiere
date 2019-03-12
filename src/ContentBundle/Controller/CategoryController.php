@@ -9,15 +9,12 @@
 */
 namespace ContentBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 use MenuBundle\Entity\Categorie;
-use AppBundle\Service\SiteService;
 use ContentBundle\Entity\Article;
 
 use Doctrine\ORM\Mapping\Entity;
@@ -69,64 +66,6 @@ class CategoryController extends FOSRestController implements ContainerAwareInte
     public function __construct() {
         
     }
-	
-	/**
-	 * @Route("/products/category/{slug}", methods={"GET","HEAD"}, name="products_category")
-	 * 
-	 * @param Request $request
-	 * 
-	 * Retourne les produits et éventuellement les sous-catégories à partir d'un identifiant de catégorie
-	 */
-	public function productFromCategory(Request $request) {
-	    $request->setRequestFormat("html");
-	    
-	    $this->siteService = $this->container->get('site_service');
-	    
-	    $routeComponent = $request->get("slug");
-
-	    if (filter_var($routeComponent, FILTER_VALIDATE_INT)) {
-	        $id = (int) $routeComponent;
-	        $slug = "";
-	    } else {
-	        $slug = $routeComponent;
-	        $id = 0;
-	    }
-	    
-	    // Récupère la catégorie
-	    if ($id !== 0) {
-	        // Récupère la catégorie par son id
-	        $this->category = $this->getById($id);
-	    } else {
-	        // Récupère la catégorie par son slug
-	        $this->category = $this->getBySlug($slug);
-	    }
-	    
-	    // Récupère le fil d'ariane de la catégorie courante
-	    if ($this->category->hasParent()) {
-	        $ancestors = $this->category->getBreadcrumb();
-	    }
-	    $ancestors[] = $this->category; // Catégorie courante dans le fil d'ariane
-	    
-	    /**
-	    $products = $this->getCategoryProductsCollection();
-	    foreach ($products as $product) {
-	        //if ($product->getId() === 4) {
-	            var_dump($product->getMainImage());
-	        //}
-	    }
-	    **/
-	    
-	    return $this->render(
-	        "@Content/category/products.html.twig",
-	        [
-	            "currentCategory" => $this->category,
-	            "ancestors" => $ancestors,
-	            "products" => $this->getCategoryProductsCollection(),
-	            "childrenProducts" => $this->getChildrenProductsCollection(),
-	            "phone" => $this->siteService->getPhoneNumber()
-	        ]
-	    );
-	}
 	
 	/**
 	 * @Rest\Get("/category/{slug}")

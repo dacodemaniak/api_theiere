@@ -8,8 +8,7 @@
 */
 namespace UserBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,6 @@ use Doctrine\Common\Util\ClassUtils;
 use UserBundle\Service\TokenService;
 use UserBundle\Payment\PaymentProcess;
 use UserBundle\Entity\Basket;
-use AppBundle\Service\SiteService;
 
 class UserController extends FOSRestController {
 	
@@ -50,24 +48,6 @@ class UserController extends FOSRestController {
 	 */
 	public function __construct(TokenService $tokenService) {
 	    $this->tokenService = $tokenService;
-	}
-	
-	/**
-	 * @Route("/myaccount/{token}", methods={"GET","HEAD"}, name="my-account")
-	 */
-	public function myAccountAction(Request $request, SiteService $siteService) {
-	    
-	    $request->setRequestFormat("html");
-	    if ($this->authToken($request)) {
-	        return $this->render(
-	            "@User/Default/account.html.twig",
-	            [
-	                "phone" => $siteService->getPhoneNumber()
-	            ]
-	        );
-	    }
-	    
-	    // Redirige vers la page de login
 	}
 	
 	/**

@@ -40,15 +40,6 @@ framework:
     php_errors:
         log: true
 
-# Twig Configuration
-twig:
-    cache: false
-    debug: '%kernel.debug%'
-    paths: 
-        '%kernel.project_dir%/src/MenuBundle/Resources/views/menus': FooterMenu
-        '%kernel.project_dir%/src/ContactBundle/Resources/views': Contact
-    strict_variables: '%kernel.debug%'
-
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -90,12 +81,6 @@ nelmio_cors:
         hosts: []
         origin_regex: false
 
-#KnpMenu
-knp_menu: 
-    twig: 
-        template: menu.html.twig
-    templating: false
-    default_renderer: twig
 
 #FOSRest Configuration
 fos_rest:

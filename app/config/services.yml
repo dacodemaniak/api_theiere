@@ -29,11 +29,6 @@ services:
         resource: '../../src/AppBundle/Controller'
         public: true
         tags: ['controller.service_arguments']
-    AppBundle\Service\SiteService:
-        public: true
-        autoconfigure: true
-        arguments: 
-            - "@doctrine.orm.entity_manager"
      
     
     # add more services, or override services that need manual wiring
@@ -59,6 +54,3 @@ services:
     token_service: 
         public: true
         alias: UserBundle\Service\TokenService
-    site_service: 
-        public: true
-        alias: AppBundle\Service\SiteService

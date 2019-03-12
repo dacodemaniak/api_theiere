@@ -2,33 +2,14 @@
 
 namespace ContactBundle\Controller;
 
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
-use AppBundle\Service\SiteService;
 
-class DefaultController extends FOSRestController
-{
-    
-    /**
-     * @Route("/contact", methods={"GET","HEAD"}, name="contact")
-     */
-    public function showAction(Request $request) {
-        $request->setRequestFormat("html");
-        
-        $siteService = $this->container->get("site_service");
-        
-        return $this->render(
-            "@Contact/contact.html.twig",
-            [
-                "phone" => $siteService->getPhoneNumber()
-            ]
-        );
-    }
+class DefaultController extends FOSRestController {
     
     /**
      * @Rest\Put("/contact")

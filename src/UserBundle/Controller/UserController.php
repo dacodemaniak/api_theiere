@@ -5,6 +5,8 @@
 * @package UserBundle\Controller
 * @version 1.0.1
 * 	Modification de la route pour l'utilisateur anonyme
+* @version 1.0.2
+*   Gestion de la récupération du mot de passe
 */
 namespace UserBundle\Controller;
 
@@ -175,6 +177,50 @@ class UserController extends FOSRestController {
 		}
 	}
 
+	/**
+	 * @Rest\Get("/user/email/{login}/{username}", defaults={"username"=""})
+	 * @param Request $request Requête envoyée
+	 */
+	public function checkEMailAction(Request $request): View {
+	    if (!$this->_checkLogin($request->get("login"))) {
+	        return new View("L'adresse e-mail est inconnue ou votre compte a été invalidé", Response::HTTP_FORBIDDEN);
+	    } else {
+	        if ($request->get("username") !== "") {
+	            $userDetail = $this->_wholeUser->getContent();
+	            if (strtoupper($userDetail->lastName) !== strtoupper($request->get("username"))) {
+	                return new View("Ce nom ne correspond pas à l'adresse e-mail saisie", Response::HTTP_FORBIDDEN);
+	            }
+	        }
+	    }
+	    return new View("Adresse d'utilisateur valide", Response::HTTP_OK);
+	}
+	
+	/**
+	 * @Rest\Post("/user/recover")
+	 * @param Request $request Requête envoyée
+	 */
+	public function passwordRecoveringAction(Request $request): View {
+	    if ($this->_checkLogin($request->get("login"))) {
+	       // Générer un token à expiration courte...
+	        $token = $this->tokenService->generate($this->_wholeUser);
+	        
+	        $userDetail = $this->_wholeUser->getContent();
+	        
+	        // Générer l'e-mail pour l'envoi du lien de récupération
+	        $emailContent = $this->renderView(
+	            "@User/Email/recovering.html.twig",
+	            [
+	                "user" => $userDetail->firstName . " " . $userDetail->lastName,
+	                "link" => "https://api.lessoeurstheiere.com/user/recover/" . $token
+	            ]
+	        );
+	        $this->_sendMailToCustomer($emailContent);
+	        return new View("Vérifiez votre boîte mail et cliquez sur le lien de réinitialisation pour récupérer votre nouveau mot de passe.", Response::HTTP_OK);
+	        
+	    }
+	    return new View("L'adresse e-mail est inconnue ou votre compte a été invalidé", Response::HTTP_FORBIDDEN);
+	}
+	
 	/**
 	 * @Rest\Post("/account/address/billing")
 	 * @param Request $request Requête envoyée
@@ -491,7 +537,7 @@ class UserController extends FOSRestController {
 	           [
 	               "order" => $order
 	           ]
-	      );
+	       );
 	       
 	       $this->_sendMail($emailContent);
 	    }
@@ -720,6 +766,32 @@ class UserController extends FOSRestController {
                 $content,
 	            "text/html"
 	         );
+	    // Envoi le mail proprement dit
+	    if (($recipients = $mailer->send($message)) !== 0) {
+	        // Retourne le message au client
+	        return true;
+	    }
+	    return false;
+	}
+	
+	private function _sendMailToCustomer(string $content) {
+	    $mailer = $this->get("mailer");
+	    
+	    $userDetail = $this->_wholeUser->getContent();
+	    
+	    $message = (new \Swift_Message("Vous avez demandé la réinitialisation de votre mot de passe sur Les Soeurs Théière"))
+	    ->setFrom("hello@lessoeurstheiere.com")
+	    ->setTo([
+	        $this->_wholeUser->getLogin() => $userDetail->firstName . " " . $userDetail->lastName,
+	    ])
+	    ->setBcc([
+	        "jean-luc.a@web-projet.com" => "Supervision les Soeurs Théière"
+	    ])
+	    ->setCharset("utf-8")
+	    ->setBody(
+	        $content,
+	        "text/html"
+	        );
 	    // Envoi le mail proprement dit
 	    if (($recipients = $mailer->send($message)) !== 0) {
 	        // Retourne le message au client

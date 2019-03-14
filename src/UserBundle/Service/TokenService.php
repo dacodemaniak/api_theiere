@@ -85,8 +85,6 @@ class TokenService {
                     "user" => $payload->user_id
                 ];
             }
-            
-            
         }
         
         return [

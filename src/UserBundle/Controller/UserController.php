@@ -222,6 +222,48 @@ class UserController extends FOSRestController {
 	}
 	
 	/**
+	 * @Rest\Get("/user/recover/{token}")
+	 * @param Request $request Requête envoyée
+	 */
+	public function passwordRecoverAction(Request $request) {
+	    $authGuard = $this->tokenService->tokenAuthentication($request);
+	    
+	    if ($authGuard["code"] === Response::HTTP_OK) {
+	        $this->_wholeUser = $this->getDoctrine()
+	           ->getManager()
+	           ->getRepository("UserBundle:User")
+	           ->find($authGuard["user"]);
+	        
+	        // Générer le nouveau mot de passe à transmettre
+	        $password = $this->_makePassword();
+	        
+	        $this->_wholeUser->setSecurityPass($this->_createPassword($password, $this->_wholeUser->getSalt()));
+	        
+	        // Fait persister la donnée
+	        $entityManager = $this->getDoctrine()->getManager();
+	        $entityManager->persist($this->_wholeUser);
+	        $entityManager->flush();
+	        
+	        $userDetail = $this->_wholeUser->getContent();
+	        
+	        // Prépare le mail à envoyer
+	        $emailContent = $this->renderView(
+	            "@User/Email/password.html.twig",
+	            [
+	                "user" => $userDetail->firstName . " " . $userDetail->lastName,
+	                "password" => $password
+	            ]
+	        );
+	        
+	        $this->_sendMailToCustomer($emailContent, "Votre nouveau mot de passe sur Les Soeurs Théière");
+	        
+	        return new View($this->_format($this->_wholeUser, $request->get("token")));
+	    }
+	    
+	    return new View("Token non valide ou expiré", $authGuard["code"]);
+	}
+	
+	/**
 	 * @Rest\Post("/account/address/billing")
 	 * @param Request $request Requête envoyée
 	 */
@@ -690,6 +732,46 @@ class UserController extends FOSRestController {
 	}
 	
 	/**
+	 * Génère aléatoirement un mot de passe avec 8 caractères
+	 * @return string
+	 */
+	private function _makePassword(): string {
+	    $_mins = [
+	        "a","b","c","d","e","f","g",'h',"i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"
+	    ];
+	    $_majs = [
+	        "A","B","B","D","E","F","G",'H',"I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+	    ];
+	    
+	    $_nums = [
+	        "0","1","2","3","4","5","6","7","8","9"
+	    ];
+	    
+	    $_puncs = [
+	        "&","(","-","/","@",")","+","*"
+	    ];
+	    
+	    $_all = [
+	        $_mins, $_majs, $_nums, $_puncs
+	    ];
+	    
+	    $passwordChars = [];
+	    
+	    for ($i = 0; $i < 8; $i++) {
+	        // Extrait une des séries aléatoirement
+	        $serialIndice = random_int(0, 3);
+	        $serial = $_all[$serialIndice];
+	        
+	        // Extrait aléatoirement un caractère de la série sélectionnée
+	        $serialIndice = random_int(0, count($serial) - 1);
+	        
+	        $passwordChars[$i] = $serial[$serialIndice];
+	    }
+	    
+	    return join("",$passwordChars);
+	}
+	
+	/**
 	 * Retourne le formatage d'un utilisateur complet
 	 * @param Entity $userEntity
 	 * @return array
@@ -774,12 +856,12 @@ class UserController extends FOSRestController {
 	    return false;
 	}
 	
-	private function _sendMailToCustomer(string $content) {
+	private function _sendMailToCustomer(string $content, string $title = "Vous avez demandé la réinitialisation du mot de passe sur Les Soeurs Théière") {
 	    $mailer = $this->get("mailer");
 	    
 	    $userDetail = $this->_wholeUser->getContent();
 	    
-	    $message = (new \Swift_Message("Vous avez demandé la réinitialisation de votre mot de passe sur Les Soeurs Théière"))
+	    $message = (new \Swift_Message($title))
 	    ->setFrom("hello@lessoeurstheiere.com")
 	    ->setTo([
 	        $this->_wholeUser->getLogin() => $userDetail->firstName . " " . $userDetail->lastName,

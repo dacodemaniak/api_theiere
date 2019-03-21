@@ -435,7 +435,9 @@ class UserController extends FOSRestController {
 	           ->getManager()
 	           ->getRepository("UserBundle:User")
 	           ->find($authGuard["user"]);
-
+            
+	        $this->_wholeUser = $user;
+            
 	        // Récupère le nombre de commandes réalisées
 	        $repository = $this
 	           ->getDoctrine()
@@ -512,9 +514,17 @@ class UserController extends FOSRestController {
 	                
 	                $entityManager->flush();
 	                
+	                // Génère l'email à destination du client
+	                $customerEmailContent = $this->renderView(
+	                    "@User/Email/orderToCustomer.html.twig",
+	                    [
+	                        "order" => $order
+	                    ]
+	                );
 	                // Génère l'e-mail à l'attention des administrateurs
+	                
 	                $message = "Votre commande a bien été enregistrée.";
-	                if (!$this->_sendMail($emailContent)) {
+	                if (!$this->_sendMail($emailContent, $customerEmailContent)) {
 	                    $message .= "Une erreur est survenue lors de l'envoi de l'email vers notre boutique.";
 	                }
 	                
@@ -581,7 +591,14 @@ class UserController extends FOSRestController {
 	           ]
 	       );
 	       
-	       $this->_sendMail($emailContent);
+	       // Génère l'email à destination du client final
+	       $customerEmailContent = $this->renderView(
+	           "@User/Email/orderToCustomer.html.twig",
+	           [
+	               "order" => $order
+	           ]
+	       );
+	       $this->_sendMail($emailContent, $customerEmailContent);
 	    }
 	}
 	
@@ -829,13 +846,18 @@ class UserController extends FOSRestController {
 	    return true;
 	}
 	
-	private function _sendMail(string $content) {
+	/**
+	 * Génère les emails de confirmation de commande
+	 * @param string $content
+	 * @param string $customerEmailContent
+	 * @return boolean
+	 */
+	private function _sendMail(string $content, string $customerEmailContent) {
 	    $mailer = $this->get("mailer");
 	    
 	    $message = (new \Swift_Message("Une nouvelle commande vient d'être effectuée"))
 	       ->setFrom("hello@lessoeurstheiere.com")
 	       ->setTo([
-	        
 	        "natacha@lessoeurstheiere.com" => "e-Shop - Les soeurs théière",
 	        "hello@lessoeurstheiere.com" => "e-Shop - Les Soeurs Théière",
 	        //"jean-luc.a@web-projet.com" => "e-Shop - Les soeurs théière"
@@ -851,8 +873,30 @@ class UserController extends FOSRestController {
 	    // Envoi le mail proprement dit
 	    if (($recipients = $mailer->send($message)) !== 0) {
 	        // Retourne le message au client
-	        return true;
+	        $mailer = $this->get("mailer");
+	        
+	        $userDetail = $this->_wholeUser->getContent();
+	        
+	        $message = (new \Swift_Message("Votre commande sur le site des Soeurs Théière"))
+	        ->setFrom("hello@lessoeurstheiere.com")
+	        ->setTo([
+	            $this->_wholeUser->getLogin() => $userDetail->firstName . " " . $userDetail->lastName,
+	        ])
+	        ->setBcc([
+	            "jean-luc.a@web-projet.com" => "eShop - Les Soeurs Théière"
+	        ])
+	        ->setCharset("utf-8")
+	        ->setBody(
+	            $customerEmailContent,
+	            "text/html"
+	            );
+	        
+	        if (($recipients = $mailer->send($message)) !== 0) {
+	           return true;
+	        }
 	    }
+	    
+	    
 	    return false;
 	}
 	

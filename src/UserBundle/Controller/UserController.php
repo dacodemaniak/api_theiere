@@ -15,6 +15,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use FOS\RestBundle\View\View;
 use UserBundle\Entity\User;
 use UserBundle\Entity\Groupe;
@@ -228,6 +229,15 @@ class UserController extends FOSRestController {
 	public function passwordRecoverAction(Request $request) {
 	    $authGuard = $this->tokenService->tokenAuthentication($request);
 	    
+	    // Gère l'environnement d'exécution
+	    $runMode = $this->get("kernel")->isDebug();
+	    
+	    if (!$runMode) {
+	        $url = "https://lessoeurstheiere.com/user/passwordreset/";
+	    } else {
+	        $url = "http://www.lessoeurstheiere.wrk/user/passwordreset/";
+	    }
+	    
 	    if ($authGuard["code"] === Response::HTTP_OK) {
 	        $this->_wholeUser = $this->getDoctrine()
 	           ->getManager()
@@ -257,10 +267,10 @@ class UserController extends FOSRestController {
 	        
 	        $this->_sendMailToCustomer($emailContent, "Votre nouveau mot de passe sur Les Soeurs Théière");
 	        
-	        return new View($this->_format($this->_wholeUser, $request->get("token")));
+	        return new RedirectResponse($url . "ok");
 	    }
 	    
-	    return new View("Token non valide ou expiré", $authGuard["code"]);
+	    return new RedirectResponse($url . "ko");
 	}
 	
 	/**

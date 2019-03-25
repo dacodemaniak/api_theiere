@@ -12,6 +12,7 @@ use ReallySimpleJWT\TokenValidator;
 use UserBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use ReallySimpleJWT\Exception\TokenValidatorException;
 
 class TokenService {
 
@@ -53,44 +54,44 @@ class TokenService {
      * @return array
      */
     public function tokenAuthentication(Request $request): array {
-        $authTokenHeader = $request->get("token", $request->headers->get('X-Auth-Token'));
-        
-        
-        $isValid = Token::validate($authTokenHeader, $this->secret);
-        
-        if ($isValid) {
-            $validator = new TokenValidator();
-            $validator->splitToken($authTokenHeader)
-                ->validateExpiration()
-                ->validateSignature($this->secret);
-            
-            
+
+        try {
+            $authTokenHeader = $request->get("token", $request->headers->get('X-Auth-Token'));
                 
-            $payload = json_decode($validator->getPayload());
-            
-            
-            $now = new \DateTime();
-            $expiration = \DateTime::createFromFormat("Y-m-d H:i:s", $payload->exp);
-            
-            //echo "Compare : " . $now->format("d-m-Y H:i:s") . " à " . $expiration->format("d-m-Y H:i:s") . "\n";
-            
-            if ($now > $expiration) {
-                return [
-                    "code" => Response::HTTP_PRECONDITION_FAILED,
-                    "user" => $payload->user_id
-                ];
-            } else {
-                return [
-                    "code" => Response::HTTP_OK,
-                    "user" => $payload->user_id
-                ];
+                
+            $isValid = Token::validate($authTokenHeader, $this->secret);
+                
+            if ($isValid) {
+                $validator = new TokenValidator();
+                    
+                $validator->splitToken($authTokenHeader)
+                    ->validateExpiration()
+                    ->validateSignature($this->secret);
+                    
+                $payload = json_decode($validator->getPayload());
+                    
+                    
+                $now = new \DateTime();
+                $expiration = \DateTime::createFromFormat("Y-m-d H:i:s", $payload->exp);
+                    
+                if ($now > $expiration) {
+                    return [
+                        "code" => Response::HTTP_PRECONDITION_FAILED,
+                        "user" => $payload->user_id
+                    ];
+                } else {
+                    return [
+                        "code" => Response::HTTP_OK,
+                        "user" => $payload->user_id
+                    ];
+                }
             }
+        } catch(TokenValidatorException $tokenException) {
+            return [
+                "code" => Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED,
+                "user" => 0
+            ];
         }
-        
-        return [
-            "code" => Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED,
-            "user" => 0
-        ];
     }
     
     /**

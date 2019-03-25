@@ -142,7 +142,7 @@ class Menu
     
     /**
      * Ajoute une catégorie
-     * @param MenuBundle\Entity\Categorie $categorie
+     * @param \MenuBundle\Entity\Categorie $categorie
      * @return Menu
      */
     public function addCategorie($categorie): Menu {
@@ -153,7 +153,7 @@ class Menu
     
     /**
      * Retourne la liste des catégories du menu courant
-     * @return \ArrayCollection
+     * @return \Doctrine\Common\Collections\ArrayCollection
      */
     public function getCategories() {
     	return $this->categories;

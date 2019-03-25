@@ -41,31 +41,44 @@
 				<thead>
 					<tr>
 						<td>Libellé</td>
+						<td>Réf.</td>
 						<td>Quantité</td>
-						<td>Prix Unitaire HT</td>
-						<td>Prix Total HT</td>
+						<td>P.U HT</td>
 						<td>TVA</td>
-						<td>Prix total TTC</td>
+						<td>Total H.T.</td>
+						<td>Total T.T.C</td>
 					</tr>
 				</thead>
 				
 				<tbody>
+					{% set totalBasket = 0 %}
+					{% set carryingCharge = 0 %}
 					{% for product in order.getBasket() %}
 						<tr>
-							<td>{{ product.product.title.fr }}</td>
-							<td>{{ product.quantity }}</td>
-							<td>{{ product.priceHT }}</td>
-							<td>{{ product.product.vat * 100 }}</td>
-							<td>{{ product.priceHT * product.quantity }}</td>
-							<td>{{ (product.priceHT * product.quantity) * (1 + product.product.vat) }}</td>
+							<td>{{ product.product.title.fr }}</td><!-- Libellé du produit -->
+							<td>{{ product.product.reference }}</td><!-- Référence du produit -->
+							<td>{{ product.quantity }}</td><!-- Quantité commandée -->
+							<td>{{ product.priceHT }}</td><!-- Prix unitaire HT -->
+							<td>{{ product.product.vat * 100 }}%</td><!-- Taux de TVA -->
+							<td>{{ product.priceHT * product.quantity }}</td><!-- Total HT -->
+							<td>{{ ((product.priceHT * product.quantity) * (1 + product.product.vat))|number_format(2, ",", " ") }}</td><!-- Total TTC -->
 						</tr>
+						{% set totalBasket = totalBasket +  (product.priceHT * product.quantity) * (1 + product.product.vat) %}
 					{% endfor %}
 				</tbody>
 				
 				<!-- Total de la facture -->
 				<tfoot>
 					<tr>
-						<td colspan="5">Total</td>
+						<td colspan="6">
+							Frais de port
+						</td>
+						<td>
+							{{ (order.getFullTaxTotal() - totalBasket)|number_format(2, ",", " ") }}
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6">Total</td>
 						<td>{{ order.getFullTaxTotal() }}</td>
 					</tr>
 				</tfoot>

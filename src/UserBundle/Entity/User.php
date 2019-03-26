@@ -338,6 +338,21 @@ class User
     }
     
     /**
+     * Retourne une des données de contenu Utilisateur si elle existe
+     * @param string $attributeName
+     * @return string|NULL
+     */
+    public function __get(string $attributeName) {
+        if (!property_exists($this, $attributeName)) {
+            $content = $this->getContent();
+            if (property_exists($content, $$attributeName)) {
+                return $content->{$attributeName};
+            }
+        }
+        return null;
+    }
+    
+    /**
      * Retourne le groupe de l'utilisateur courant
      * @return UserBundle\Groupe
      */

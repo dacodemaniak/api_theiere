@@ -353,6 +353,19 @@ class User
     }
     
     /**
+     * Retourne le numéro de téléphone
+     * @return string|NULL
+     */
+    public function getPhoneNumber() {
+        $content = $this->getContent();
+        
+        if (property_exists($content, "phone")) {
+           return $content->phone;
+        }
+        return null;
+    }
+    
+    /**
      * Retourne le groupe de l'utilisateur courant
      * @return UserBundle\Groupe
      */

@@ -72,21 +72,48 @@
                                     				</thead>
                                     				
                                     				<tbody>
+                                    				    {% set totalBasket = 0 %}
+					                                    {% set carryingCharge = 0 %}
                                     					{% for product in order.getBasket() %}
                                     						<tr>
                                     							<td>{{ product.product.title.fr }}</td>
                                     							<td>{{ product.quantity }}</td>
                                     							<td>{{ ((product.priceHT * product.quantity) * (1 + product.product.vat))|number_format(2, ",", " ") }}</td>
                                     						</tr>
+                                    						{% set totalBasket = totalBasket +  (product.priceHT * product.quantity) * (1 + product.product.vat) %}
                                     					{% endfor %}
                                     				</tbody>
                                     				
                                     				<!-- Total de la facture -->
                                     				<tfoot>
                                     					<tr>
-                                    						<td colspan="5">Total à payer (frais de port inclus)</td>
-                                    						<td>{{ order.getFullTaxTotal() }}</td>
+                                    						<td colspan="2">
+                                    							Frais de port
+                                    						</td>
+                                    						<td>
+                                    							{{ (order.getFullTaxTotal() - totalBasket)|number_format(2, ",", " ") }}
+                                    						</td>
                                     					</tr>
+                                    					<tr>
+                                    						<td colspan="2">Total à payer (frais de port inclus)</td>
+                                    						<td>{{ order.getFullTaxTotal()|number_format(2, ",", " ") }}</td>
+                                    					</tr>
+                                    					
+                                    					<!-- Si le mode de paiement est le chèque, ajouter les informations nécessaires -->
+                                    					{% if order.getPaymentMode() == "ch" %}
+                                    						<tr>
+                                    							<td colspan="3">
+                                    								<p>Vous avez choisi le paiement par chèque, votre commande sera préparée et expédiée à réception de votre règlement à l'attention de :</p>
+                                    								<p><strong>Les Soeurs Théière</strong></p>
+                                    								<p>
+                                    									Cap Mirabeau<br>
+                                    									1 Chemin de la Coume<br>
+                                    									09300 Lavelanet
+                                    								</p>
+                                    								<p>En indiquant votre numéro de commande : <strong>{{ order.getReference() }}</strong></p>
+                                    							</td>
+                                    						</tr>
+                                    					{% endif %}
                                     				</tfoot>
                                     			</table>
                                     		</td>

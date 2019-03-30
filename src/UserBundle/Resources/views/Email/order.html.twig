@@ -19,12 +19,13 @@
     			<tbody>
     				<tr>
     					<td>
-    						{{ order.getUser().getName() }}
+    						<p>{{ order.getUser().getName() }}</p>
+    						<p>{{ order.getUser().getLogin() }}</p>
+    						<p>{{ order.getUser().getPhoneNumber() }}</p>
     					</td>
     					<td>
     						<p>{{ order.getDeliveryAddress() }}</p>
-    						<p>{{ order.getUser().getLogin() }}</p>
-    						<p>{{ order.getUser().getPhoneNumber() }}</p>
+
     						<ul>
     							<li>Livreur : {{ order.getCarrier() }}</li>
     							<li>Mode : {{ order.getCarryingMode() }}
@@ -60,9 +61,9 @@
 							<td>{{ product.product.title.fr }}</td><!-- Libellé du produit -->
 							<td>{{ product.product.reference }}</td><!-- Référence du produit -->
 							<td>{{ product.quantity }}</td><!-- Quantité commandée -->
-							<td>{{ product.priceHT }}</td><!-- Prix unitaire HT -->
+							<td>{{ product.priceHT|number_format(2, ",", " ") }}</td><!-- Prix unitaire HT -->
 							<td>{{ product.product.vat * 100 }}%</td><!-- Taux de TVA -->
-							<td>{{ product.priceHT * product.quantity }}</td><!-- Total HT -->
+							<td>{{ (product.priceHT * product.quantity)|number_format(2, ",", " ") }}</td><!-- Total HT -->
 							<td>{{ ((product.priceHT * product.quantity) * (1 + product.product.vat))|number_format(2, ",", " ") }}</td><!-- Total TTC -->
 						</tr>
 						{% set totalBasket = totalBasket +  (product.priceHT * product.quantity) * (1 + product.product.vat) %}

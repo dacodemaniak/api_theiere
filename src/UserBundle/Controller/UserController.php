@@ -563,6 +563,7 @@ class UserController extends FOSRestController {
 	           ->getManager()
 	           ->getRepository("UserBundle:User")
 	           ->find($userId);
+	        $this->_wholeUser = $user;
 	        
 	        $basketRepository = $this
 	           ->getDoctrine()
@@ -577,38 +578,42 @@ class UserController extends FOSRestController {
 	           ]
 	       );
 	       
-	       // Mise à jour de la commande et envoi du mail de confirmation
-	        $nextOrderNum = $basketRepository->getNextOrderNum();
-	        
-	        $date = new \DateTime();
-	        
-	        $orderNum = $date->format('Ymd') . "-" . sprintf("%'.05d\n", $nextOrderNum);
-	        $order
-	           ->setReference($orderNum)
-	           ->setValidationDate($date);
-	        
-	       // Persistence de la commande
-	       $entityManager = $this->getDoctrine()->getManager();
-	       $entityManager->persist($order);
-	           
-	       $entityManager->flush();
-	       
-	       // Dans tous les cas, on génère l'email final
-	       $emailContent = $this->renderView(
-	           "@User/Email/order.html.twig",
-	           [
-	               "order" => $order
-	           ]
-	       );
-	       
-	       // Génère l'email à destination du client final
-	       $customerEmailContent = $this->renderView(
-	           "@User/Email/orderToCustomer.html.twig",
-	           [
-	               "order" => $order
-	           ]
-	       );
-	       $this->_sendMail($emailContent, $customerEmailContent);
+	       if($order) {
+    	       // Mise à jour de la commande et envoi du mail de confirmation
+    	        $nextOrderNum = $basketRepository->getNextOrderNum();
+    	        
+    	        $date = new \DateTime();
+    	        
+    	        $orderNum = $date->format('Ymd') . "-" . sprintf("%'.05d\n", $nextOrderNum);
+    	        $order
+    	           ->setReference($orderNum)
+    	           ->setValidationDate($date);
+    	        
+    	       // Persistence de la commande
+    	       $entityManager = $this->getDoctrine()->getManager();
+    	       $entityManager->persist($order);
+    	           
+    	       $entityManager->flush();
+    	       
+    	       // Dans tous les cas, on génère l'email final
+    	       $emailContent = $this->renderView(
+    	           "@User/Email/order.html.twig",
+    	           [
+    	               "order" => $order
+    	           ]
+    	       );
+    	       
+    	       // Génère l'email à destination du client final
+    	       $customerEmailContent = $this->renderView(
+    	           "@User/Email/orderToCustomer.html.twig",
+    	           [
+    	               "order" => $order
+    	           ]
+    	       );
+    	       $this->_sendMail($emailContent, $customerEmailContent);
+	       } else {
+	           return new View("Bad request on : " . $user->getId() . " ref : " . $transId, Response::HTTP_BAD_REQUEST);
+	       }
 	    }
 	}
 	

@@ -341,8 +341,8 @@ class User
      * Retourne une des données de contenu Utilisateur si elle existe
      * @param string $attributeName
      * @return string|NULL
-     */
-    public function __get(string $attributeName) {
+    */
+    public function __get($attributeName) {
         if (!property_exists($this, $attributeName)) {
             $content = $this->getContent();
             if (property_exists($content, $$attributeName)) {

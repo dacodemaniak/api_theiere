@@ -7,6 +7,8 @@
 * 	Modification de la route pour l'utilisateur anonyme
 * @version 1.0.2
 *   Gestion de la récupération du mot de passe
+* @version 1.0.3
+*   Vérification du nombre de commandes passées
 */
 namespace UserBundle\Controller;
 
@@ -627,6 +629,72 @@ class UserController extends FOSRestController {
 	}
 	
 	/**
+	 * @Rest\Get("/order/send/{reference}")
+	 * 
+	 * @param Request $request
+	 */
+	public function sendOrder(Request $request) {
+	    
+	    $basketRepository = $this
+	       ->getDoctrine()
+	       ->getManager()
+	       ->getRepository("UserBundle:Basket");
+	    
+	    $order = $basketRepository->findOneBy(
+	       [
+	           "reference" => $request->get("reference") . "\n"
+	       ]
+	    );
+	    
+	    $this->_wholeUser = $order->getUser();
+	    
+	    // Dans tous les cas, on génère l'email final
+	    $emailContent = $this->renderView(
+	        "@User/Email/order.html.twig",
+	        [
+	            "order" => $order
+	        ]
+	    );
+	    
+	    $this->_reSendMail($emailContent);
+	}
+	
+	/**
+	 * @Rest\Get("/order/customer/number")
+	 * 
+	 * @param Request $request
+	 * @return View
+	 */
+	public function hasOrdersAction(Request $request): View {
+	    $authGuard = $this->tokenService->tokenAuthentication($request);
+	    
+	    if ($authGuard["code"] === Response::HTTP_OK) {
+	        $user = $this->getDoctrine()
+	           ->getManager()
+	           ->getRepository("UserBundle:User")
+	           ->find($authGuard["user"]);
+	        
+	        
+	        // Récupère le nombre de commandes réalisées
+	        $repository = $this->getDoctrine()
+	           ->getManager()
+	           ->getRepository("UserBundle:Basket");
+	        $orders = $repository->findBy(
+	           [
+	               "user" => $user
+	           ]
+	        );
+	        
+	        
+	        return new View(count($orders), Response::HTTP_OK);
+
+	    }
+	    
+	    return new View("Token non valide ou expiré", Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED);
+	}
+
+
+	/**
 	 * Retourne l'utilisateur courant à partir du token JWT
 	 * @param Request $request
 	 * @return bool
@@ -909,6 +977,39 @@ class UserController extends FOSRestController {
 	        if (($recipients = $mailer->send($message)) !== 0) {
 	           return true;
 	        }
+	    }
+	    
+	    
+	    return false;
+	}
+
+	/**
+	 * Génère les emails de confirmation de commande
+	 * @param string $content
+	 * @param string $customerEmailContent
+	 * @return boolean
+	 */
+	private function _reSendMail(string $content) {
+	    $mailer = $this->get("mailer");
+	    
+	    $message = (new \Swift_Message("Réémission de commande"))
+	       ->setFrom("hello@lessoeurstheiere.com")
+	       ->setTo([
+	           //"natacha@lessoeurstheiere.com" => "e-Shop - Les soeurs théière",
+	           //"hello@lessoeurstheiere.com" => "e-Shop - Les Soeurs Théière",
+	           "jean-luc.a@web-projet.com" => "e-Shop - Les soeurs théière"
+	       ])
+	       ->setBcc([
+	        "jean-luc.a@web-projet.com" => "eShop - Les Soeurs Théière"
+	       ])
+	       ->setCharset("utf-8")
+	       ->setBody(
+	           $content,
+	           "text/html"
+	        );
+	    // Envoi le mail proprement dit
+	    if (($recipients = $mailer->send($message)) !== 0) {
+	       return true;
 	    }
 	    
 	    

@@ -2,6 +2,8 @@
 
 namespace UserBundle\Repository;
 
+use UserBundle\Entity\User;
+
 /**
  * BasketRepository
  *
@@ -25,5 +27,30 @@ class BasketRepository extends \Doctrine\ORM\EntityRepository
       } catch(\Exception $e) {
           return 2;
       }
+    }
+    
+    public function getValidOrders(User $user): array {
+        $query = $this->createQueryBuilder("b")
+            ->select('b.id')
+            ->addSelect('b.reference')
+            ->addSelect('b.convertDate')
+            ->addSelect('b.convertTime')
+            ->addSelect('b.paymentMode')
+            ->addSelect('b.fullTaxTotal')
+            ->addSelect('b.content')
+            ->where('b.reference LIKE :convert')
+            ->andWhere('b.user = :user_id')
+            ->addOrderBy('b.convertDate', 'desc')
+            ->setParameter('user_id', $user)
+            ->setParameter('convert', '%-%');
+        
+        try {
+            $result = $query
+                ->getQuery()
+                ->execute();
+            return $result;
+        } catch(\Exception $e) {
+            return [$e->getMessage()];
+        }
     }
 }

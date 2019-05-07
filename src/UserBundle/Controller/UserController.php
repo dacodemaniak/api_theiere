@@ -679,13 +679,11 @@ class UserController extends FOSRestController {
 	        $repository = $this->getDoctrine()
 	           ->getManager()
 	           ->getRepository("UserBundle:Basket");
-	        $orders = $repository->findBy(
-	           [
-	               "user" => $user
-	           ]
+	        $orders = $repository->getValidOrders(
+                $user
 	        );
 	        
-	        
+
 	        return new View(count($orders), Response::HTTP_OK);
 
 	    }
@@ -693,7 +691,35 @@ class UserController extends FOSRestController {
 	    return new View("Token non valide ou expiré", Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED);
 	}
 
-
+	/**
+	 * @Rest\Get("/order/customer")
+	 *
+	 * @param Request $request
+	 * @return View
+	 */
+	public function getOrdersAction(Request $request): View {
+	    $authGuard = $this->tokenService->tokenAuthentication($request);
+	    
+	    if ($authGuard["code"] === Response::HTTP_OK) {
+	        $user = $this->getDoctrine()
+	        ->getManager()
+	        ->getRepository("UserBundle:User")
+	        ->find($authGuard["user"]);
+	        
+	        
+	        // Récupère le nombre de commandes réalisées
+	        $repository = $this->getDoctrine()
+	           ->getManager()
+	           ->getRepository("UserBundle:Basket");
+	        $orders = $repository->getValidOrders(
+                $user
+	        );
+	        return new View($orders, Response::HTTP_OK);
+	        
+	    }
+	    
+	    return new View("Token non valide ou expiré", Response::HTTP_NETWORK_AUTHENTICATION_REQUIRED);
+	}
 	/**
 	 * Retourne l'utilisateur courant à partir du token JWT
 	 * @param Request $request
